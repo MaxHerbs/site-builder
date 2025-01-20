@@ -1,0 +1,15 @@
+name: Run CI job for all compontents
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  instaloader:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.repository
+    uses: ./.github/workflows/_instaloader.yaml
+
+  ui-builder:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.repository
+    uses: ./.github/workflows/_ui_builder.yaml

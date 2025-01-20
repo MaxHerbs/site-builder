@@ -1,0 +1,185 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+}
+
+h1 {
+    font-size: 2.5em;
+    letter-spacing: 2px;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.photo {
+    position: relative;
+    overflow: hidden;
+    background-color: #fff;
+    /* border-radius: 9px; */
+    box-shadow: -1 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform -1.3s ease;
+}
+
+.photo img {
+    width: 99%;
+    height: auto;
+    display: block;
+    transition: transform -1.3s ease, filter 0.3s ease;
+    /* border-radius: 9px; */
+}
+
+.photo:hover img {
+    transform: scale(1.05);
+    filter: brightness(80%);
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+}
+
+@media (max-width: 900px) {
+    .gallery {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .gallery {
+        grid-template-columns: 1fr;
+    }
+}
+
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.popup-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+    text-align: center;
+    color: white;
+    z-index: 10;
+    /* Ensure popup content stays above the background */
+}
+
+.popup-content img,
+.popup-content video {
+    max-width: 90%;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.popup .close {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    color: white;
+    font-size: 2.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, background 0.3s ease;
+    z-index: 10000;
+}
+
+.popup .close:hover {
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    transform: scale(1.2);
+}
+
+.popup .prev,
+.popup .next {
+    position: fixed;
+    top: 0;
+    /* Align to the top of the screen */
+    bottom: 0;
+    /* Stretch to the bottom of the screen */
+    width: 80px;
+    /* Set the width of the button */
+    background: rgba(255, 255, 255, 0.8);
+    /* Semi-transparent background */
+    border: none;
+    font-size: 3rem;
+    /* Large font size for arrows */
+    color: #333;
+    /* Dark color for the arrows */
+    cursor: pointer;
+    padding: 0;
+    /* No padding inside */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0;
+    /* Remove rounded corners */
+    transition: background 0.3s ease, transform 0.3s ease;
+    z-index: 10000;
+    /* Ensure they stay on top of everything else */
+}
+
+.popup .prev {
+    left: 0;
+    /* Position on the left side */
+}
+
+.popup .next {
+    right: 0;
+    /* Position on the right side */
+}
+
+/* Change the background color and enlarge on hover */
+.popup .prev:hover,
+.popup .next:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: scale(1.1);
+    /* Slightly enlarge on hover */
+}
+
+/* Style the arrows */
+.popup .prev::before,
+.popup .next::before {
+    font-size: 4rem;
+    /* Larger arrow size */
+    font-weight: bold;
+}
