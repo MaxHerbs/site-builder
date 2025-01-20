@@ -35,6 +35,12 @@ jobs:
         with:
           driver-opts: network=host
 
+      - name: Generate Version
+        id: version
+        run: |
+          VERSION=$(git describe --tags --always || echo "0.1.0")
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
       - name: Build Image
         uses: docker/build-push-action@v6.12.0
         with:
@@ -46,5 +52,4 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          build-args:
-            VERSION: ${{ env.VERSION }}
+          build-args: VERSION=${{ env.VERSION }}
