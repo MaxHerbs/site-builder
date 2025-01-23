@@ -14,10 +14,8 @@
 
 # Helm Charts
 *.tgz
-charts/
 *.helm
-values.yaml
-
+charts/
 # Virtual environments
 venv/
 env/
