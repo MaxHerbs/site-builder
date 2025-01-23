@@ -3,7 +3,7 @@ import os
 from jinja2 import Template
 
 
-def render_template(config, posts):
+def render_template(output_dir, posts):
     """
     Render the template with the context data
     """
@@ -14,5 +14,5 @@ def render_template(config, posts):
 
     rendered_template = template.render(posts=posts)
 
-    with open(config["output_dir"] + "/index.html", "w+") as f:
+    with open(output_dir + "/index.html", "w+") as f:
         f.write(rendered_template)

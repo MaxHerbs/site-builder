@@ -33,16 +33,17 @@ def setup_logging(logging_level: str):
 
 def version_callback(value: bool):
     if value:
-        typer.echo(f"Hive-Controller-IOC Version: {__version__}")
+        typer.echo(f"Site-Builder Version: {__version__}")
         raise typer.Exit()
 
 
 @app.command()
-def run(config_path: str = typer.Option(..., help="Path to the config file")):
+def run(source_path: str = typer.Option(..., help="Path to raw source file dump"),
+        destination_path: str = typer.Option(..., help="Path to raw source file dump")):
     """
     Run the site builder
     """
-    site_builder(config_path)
+    site_builder(source_path, destination_path)
 
 
 @app.callback()

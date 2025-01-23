@@ -1,0 +1,55 @@
+# Python
+*.pyc
+*.pyo
+**/__pycache__/
+**/.env
+**/*.egg-info/
+**/.venv
+*.tox/
+*.coverage
+*.hypothesis/
+*.pytest_cache/
+*.mypy_cache/
+*.vscode/
+
+# Helm Charts
+*.tgz
+charts/
+*.helm
+values.yaml
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Build and temp files
+*.bak
+*.tmp
+*.swp
+*.swo
+
+# Package managers
+node_modules/
+package-lock.json
+yarn.lock
+
+# Python wheels
+*.whl
+
+# Coverage reports
+.coverage
+*.coveragerc

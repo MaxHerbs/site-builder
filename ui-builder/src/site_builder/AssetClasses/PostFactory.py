@@ -16,7 +16,7 @@ def create_posts(config, items):
     return posts
 
 
-def create_post(config, date):
+def create_post(dump_dir, date):
     post_files = unique_dates.get(date, None)
     if not post_files:
         # Not sure if this case is possible, but check anyways
@@ -30,7 +30,7 @@ def create_post(config, date):
 
     thumbnail = get_thumbnail(post_files)
     post_files = remove_unused_thumbnails(post_files)
-    post = Post(date, post_files, thumbnail, config["raw_content_dir"], comment_file)
+    post = Post(date, post_files, thumbnail, dump_dir, comment_file)
     return post
 
 

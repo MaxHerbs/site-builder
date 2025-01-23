@@ -10,9 +10,7 @@ from ._Thumbnails import format_thumbnails
 from .AssetClasses.PostFactory import create_posts
 
 
-def site_builder(config_path):
-    configManger = ConfigManager(config_path)
-    source_dir = configManger.config["raw_content_dir"]
+def site_builder(source_dir,output_dir):
     print(f"Building site from {source_dir}")
 
     if not os.path.exists(source_dir):
@@ -20,7 +18,7 @@ def site_builder(config_path):
         raise typer.Exit(1)
 
     items = os.listdir(source_dir)
-    posts = create_posts(configManger.config, items)
+    posts = create_posts(source_dir, items)
 
     print("Files with no thumbnails:\n\n\n")
     posts.sort(key=lambda x: x.date)
@@ -30,7 +28,6 @@ def site_builder(config_path):
 
     valid_posts = [post for post in posts if post.is_valid]
     print(f"Found {len(valid_posts)} valid posts.")
-    output_dir = configManger.config["output_dir"]
     if os.path.exists(output_dir):
         typer.echo(f"Output directory '{output_dir}' already exists. Cleaning...")
         subprocess.run(["rm", "-rf", output_dir])
@@ -52,7 +49,7 @@ def site_builder(config_path):
 
     format_thumbnails(output_dir + "/thumbnails/")
 
-    site = render_template(configManger.config, valid_posts)
+    site = render_template(output_dir, valid_posts)
 
 
 def validate_post():

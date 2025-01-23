@@ -13,7 +13,7 @@ classifiers = [
 ]
 description = "Site builder "
 dependencies = [
-  "instaloader",
+  "instaloader==4.14",
   "pyyaml",
   "typer",
   "jinja2",
@@ -50,6 +50,9 @@ name = "Max Herbert"
 
 [tool.setuptools_scm]
 version_file = "src/site_builder/_version.py"
+write_to = "src/site_builder/_version.py"
+fallback_version = "0.1.0"
+local_scheme = "no-local-version"
 
 [tool.pyright]
 typeCheckingMode = "standard"
