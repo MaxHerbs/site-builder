@@ -37,7 +37,7 @@ def site_builder(source_dir,output_dir):
         [
             "cp",
             "-r",
-            f"{os.path.dirname(os.path.realpath(__file__))}/../../html_assets/styles",
+            f"{os.path.dirname(os.path.realpath(__file__))}/html_assets/styles",
             output_dir,
         ]
     )
