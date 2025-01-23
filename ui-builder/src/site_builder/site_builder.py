@@ -31,7 +31,6 @@ def site_builder(source_dir,output_dir):
     if os.path.exists(output_dir):
         typer.echo(f"Output directory '{output_dir}' already exists. Cleaning...")
         subprocess.run(f"rm -rf {output_dir}/*", shell=True)
-    exit(0)
     os.mkdir(output_dir + "/images")
     os.mkdir(output_dir + "/thumbnails")
     subprocess.run(
