@@ -1,0 +1,1 @@
+recursive-include src/site_builder/html_assets *

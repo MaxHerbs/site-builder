@@ -8,7 +8,7 @@ def render_template(output_dir, posts):
     Render the template with the context data
     """
     print("len(posts):", len(posts))
-    working_dir = os.path.dirname(os.path.realpath(__file__)) + "/../../html_assets"
+    working_dir = os.path.dirname(os.path.realpath(__file__)) + "/html_assets"
     with open(working_dir + "/index.html") as f:
         template = Template(f.read())
 
