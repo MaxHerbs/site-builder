@@ -120,7 +120,7 @@ footer {
     border-radius: 50%;
     background: rgba(0, 0, 0, 0.5);
     transition: transform 0.3s ease, background 0.3s ease;
-    z-index: 10000;
+    z-index: 10001;
 }
 
 .popup .close:hover {
