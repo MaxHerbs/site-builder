@@ -29,12 +29,12 @@ spec:
             resources:
               {{- toYaml $.Values.nginx.resources | nindent 14 }}
             volumeMounts:
-              - name: destination
+              - name: dump-path
                 mountPath: /dest
           restartPolicy: OnFailure
           volumes:
-          - name: destination
+          - name: dump-path 
             hostPath:
-              path: {{ $.Values.general.dumpPath }}
+              path: {{ $.Values.general.instaloaderDump }}
               type: Directory 
 {{- end }}

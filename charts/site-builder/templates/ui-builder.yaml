@@ -37,7 +37,7 @@ spec:
             volumeMounts:
               - name: destination
                 mountPath: /dest
-              - name: src 
+              - name:  dump-path
                 mountPath: /src
 
           {{- with $.Values.siteBuilder.securityContext }}
@@ -48,10 +48,10 @@ spec:
           volumes:
           - name: destination
             hostPath:
-              path: {{ $.Values.general.targetPath }}
+              path: {{ $.Values.general.activeDirectory }}
               type: Directory 
-          - name: src
+          - name: dump-path
             hostPath:
-              path: {{ $.Values.general.dumpPath }}
+              path: {{ $.Values.general.instaloaderDump }}
               type: Directory 
 {{- end }}

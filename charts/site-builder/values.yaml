@@ -1,7 +1,7 @@
 general:
-  accountName: ACCOUNTNAME
-  dumpPath: DUMPPATH
-  targetPath: TARGETPATH
+  accountName: SOMENAME
+  instaloaderDump: DIRFORINSTALOADER
+  activeDirectory: ACTIVEDIRECTORY
 
 siteBuilder:
   create: true
