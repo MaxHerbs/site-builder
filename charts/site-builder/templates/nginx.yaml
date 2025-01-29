@@ -33,12 +33,12 @@ spec:
         resources:
           {{- toYaml $.Values.nginx.resources | nindent 10 }}
         volumeMounts:
-          - name: src-dir
+          - name: active-directory
             mountPath: /usr/share/nginx/html  # Mount point in the container
       volumes:
-      - name: src-dir
+      - name: active-directory
         hostPath:
-          path: {{ $.Values.general.targetPath }}
+          path: {{ $.Values.general.activeDirectory }}
           type: Directory 
 
 {{- end }}
