@@ -15,7 +15,6 @@
 # Helm Charts
 *.tgz
 *.helm
-charts/
 # Virtual environments
 venv/
 env/

@@ -1,0 +1,57 @@
+{{- if $.Values.siteBuilder.create }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "common.names.fullname" $ }}-sitebuilder
+  namespace: {{ .Release.Namespace }}
+  {{- with $.Values.siteBuilder.annotations }}
+  annotations:
+    {{- . | toYaml | nindent 4 }}
+  {{- end }}
+  labels:
+    {{- include "common.labels.standard" $ | nindent 4 }}
+spec:
+  schedule: "{{ $.Values.siteBuilder.schedule }}"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: site-builder
+            image: {{ include "common.images.image" ( dict "imageRoot" $.Values.siteBuilder.image "global" $.Values.siteBuilder.image "chart" $.Chart ) }}
+            imagePullPolicy: {{ $.Values.siteBuilder.image.pullPolicy }}
+            {{- if $.Values.siteBuilder.runArgs }}
+            command:
+              {{- . | toYaml | nindent 12}}
+            {{- else }}
+            command: 
+            - site-builder
+            - run 
+            - --source-path 
+            - /src
+            - --destination-path 
+            - /dest
+            {{- end }}
+            resources:
+              {{- toYaml $.Values.nginx.resources | nindent 14 }}
+            volumeMounts:
+              - name: destination
+                mountPath: /dest
+              - name: src 
+                mountPath: /src
+
+          {{- with $.Values.siteBuilder.securityContext }}
+          securityContext:
+            {{- . | toYaml | nindent 12 }}
+          {{- end }}
+          restartPolicy: OnFailure
+          volumes:
+          - name: destination
+            hostPath:
+              path: {{ $.Values.general.targetPath }}
+              type: Directory 
+          - name: src
+            hostPath:
+              path: {{ $.Values.general.dumpPath }}
+              type: Directory 
+{{- end }}

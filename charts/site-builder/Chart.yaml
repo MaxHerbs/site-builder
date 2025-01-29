@@ -1,0 +1,10 @@
+apiVersion: v2
+name: site-builder
+description: Deploy the full stack of site-builder
+type: application
+version: 0.1.0
+appVersion: "1.16.0"
+dependencies:
+  - name: common
+    version: 2.23.0
+    repository: oci://docker.io/bitnamicharts

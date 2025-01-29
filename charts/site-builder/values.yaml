@@ -1,0 +1,73 @@
+general:
+  accountName: ACCOUNTNAME
+  dumpPath: DUMPPATH
+  targetPath: TARGETPATH
+
+siteBuilder:
+  create: true
+  schedule: "15 6 * * *"
+  image:
+    registry: ghcr.io
+    repository: maxherbs/site-builder-ui-builder
+    tag: "2025.1.2b1"
+    digest: ""
+    pullPolicy: IfNotPresent
+    pullSecrets: []
+  # runArgs:
+  #   - sleep
+  #   - infinity
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+  annotations: []
+
+instaloader:
+  create: true
+  schedule: "0 6 * * *"
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+  image:
+    registry: ghcr.io
+    repository: maxherbs/site-builder-instaloader
+    tag: "latest"
+    digest: ""
+    pullPolicy: Always
+    pullSecrets: []
+  runArgs:
+    - instaloader
+    - --version
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+  annotations: []
+
+service:
+  create: true
+  type: NodePort
+  httpPort: 30001
+  httpsPort: 30002
+
+nginx:
+  create: true
+  replicas: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+  annotations: []
+  podAnnotations: []

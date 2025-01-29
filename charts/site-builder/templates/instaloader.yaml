@@ -1,0 +1,40 @@
+{{- if $.Values.instaloader.create }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "common.names.fullname" $ }}-instaloader
+  namespace: {{ .Release.Namespace }}
+  {{- with $.Values.instaloader.annotations }}
+  annotations:
+    {{- . | toYaml | nindent 4 }}
+  {{- end }}
+  labels:
+    {{- include "common.labels.standard" $ | nindent 4 }}
+spec:
+  schedule: "{{ $.Values.instaloader.schedule }}"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: instaloader
+            image: {{ include "common.images.image" ( dict "imageRoot" $.Values.instaloader.image "global" $.Values.instaloader.image "chart" $.Chart ) }}
+            command: 
+            - instaloader
+            - {{ $.Values.general.accountName }}
+            - --dirname-pattern
+            - /dest
+            - --fast-update
+            imagePullPolicy: {{ $.Values.instaloader.image.pullPolicy }}
+            resources:
+              {{- toYaml $.Values.nginx.resources | nindent 14 }}
+            volumeMounts:
+              - name: destination
+                mountPath: /dest
+          restartPolicy: OnFailure
+          volumes:
+          - name: destination
+            hostPath:
+              path: {{ $.Values.general.dumpPath }}
+              type: Directory 
+{{- end }}

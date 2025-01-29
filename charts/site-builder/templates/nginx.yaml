@@ -1,0 +1,44 @@
+{{- if $.Values.nginx.create }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "common.names.fullname" $ }}
+  namespace: {{ .Release.Namespace }}
+  {{- with $.Values.nginx.annotations }}
+  annotations:
+    {{- . | toYaml | nindent 4 }}
+  {{- end }}
+  labels:
+    {{- include "common.labels.standard" $ | nindent 4 }}
+spec:
+  replicas: {{ $.Values.nginx.replicas }}
+  selector:
+    matchLabels:
+      {{- include "common.labels.matchLabels" $ | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "common.labels.matchLabels" $ | nindent 8 }}
+      {{- with $.Values.nginx.podAnnotations }}
+      annotations:
+        {{- . | toYaml | nindent 8 }}
+      {{- end }}
+    spec:
+      containers:
+      - name: nginx-deployment
+        image: nginx:alpine-slim
+        ports:
+        - containerPort: 80
+        - containerPort: 443 
+        resources:
+          {{- toYaml $.Values.nginx.resources | nindent 10 }}
+        volumeMounts:
+          - name: src-dir
+            mountPath: /usr/share/nginx/html  # Mount point in the container
+      volumes:
+      - name: src-dir
+        hostPath:
+          path: {{ $.Values.general.targetPath }}
+          type: Directory 
+
+{{- end }}
