@@ -38,12 +38,15 @@ def version_callback(value: bool):
 
 
 @app.command()
-def run(source_path: str = typer.Option(..., help="Path to raw source file dump"),
-        destination_path: str = typer.Option(..., help="Path to raw source file dump")):
+def run(
+    source_path: str = typer.Option(..., help="Path to raw source file dump"),
+    destination_path: str = typer.Option(..., help="Path to raw source file dump"),
+    pagination: bool = typer.Option(False, help="Enable pagination"),
+):
     """
     Run the site builder
     """
-    site_builder(source_path, destination_path)
+    site_builder(source_path, destination_path, pagination)
 
 
 @app.callback()

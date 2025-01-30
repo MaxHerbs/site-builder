@@ -18,9 +18,6 @@ class Post:
         self.date = date
 
         self.is_valid = self.validate(src_dir)
-        # self.is_valid = True
-
-        # self.comment = "TEST COMMENT"
         if self.comment_file:
             with open(src_dir + "/" + self.comment_file) as f:
                 self.comment = f.read().strip()
@@ -48,3 +45,8 @@ class Post:
         )
         for file in self.slide_files:
             subprocess.run(["cp", src + file, dst + "/images/" + file])
+
+    def sort_slides(self):
+        if len(self.slide_files) == 1:
+            return
+        self.slide_files.sort(key=lambda x: int(x.split("_")[-1].split(".")[0]))

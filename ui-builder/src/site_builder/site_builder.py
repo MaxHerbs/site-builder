@@ -10,7 +10,7 @@ from ._Thumbnails import format_thumbnails
 from .AssetClasses.PostFactory import create_posts
 
 
-def site_builder(source_dir,output_dir):
+def site_builder(source_dir, output_dir, pagination):
     print(f"Building site from {source_dir}")
 
     if not os.path.exists(source_dir):
@@ -25,14 +25,18 @@ def site_builder(source_dir,output_dir):
     for post in posts:
         if not post.is_valid:
             print(post)
+        post.sort_slides()
 
     valid_posts = [post for post in posts if post.is_valid]
+
     print(f"Found {len(valid_posts)} valid posts.")
-    if os.path.exists(output_dir):
-        typer.echo(f"Output directory '{output_dir}' already exists. Cleaning...")
-        subprocess.run(f"rm -rf {output_dir}/*", shell=True)
-    os.mkdir(output_dir + "/images")
-    os.mkdir(output_dir + "/thumbnails")
+    if not os.path.exists(output_dir):
+        raise typer.Exit(f"Could not find '{output_dir}")
+
+    for subpath in ["/images", "/thumbnails"]:
+        if not os.path.exists(output_dir + subpath):
+            os.mkdir(output_dir + subpath)
+    print("Copying assets")
     subprocess.run(
         [
             "cp",
@@ -47,7 +51,11 @@ def site_builder(source_dir,output_dir):
 
     format_thumbnails(output_dir + "/thumbnails/")
 
-    site = render_template(output_dir, valid_posts)
+    if not pagination:
+        site = render_template(output_dir, valid_posts)
+    else:
+        print("Paginating")
+        raise NotImplementedError("Pagination is not yet implemented")
 
 
 def validate_post():
